@@ -4,11 +4,12 @@ import MessageInput from "./MessageInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllMessages, readMessages } from "@/services/apiServices";
-import { selectChat, setChats } from "@/redux-toolkit/slices/chatSlice";
+import { Chat, selectChat, setChats } from "@/redux-toolkit/slices/chatSlice";
 import { useParams } from "react-router-dom";
+import { RootState } from "@/redux-toolkit/store";
 
 const ChatWindow = () => {
-    const chats = useSelector((state) => state.chat);
+    const chats = useSelector((state:RootState) => state.chat);
     const[name,setName] = useState("");
     const dispatch = useDispatch();
     const params = useParams();
@@ -24,12 +25,14 @@ const ChatWindow = () => {
     useEffect(() => {
         console.log("Chats in ChatWindow:", chats);
 
-        dispatch(selectChat(params.userId));
+        if(params.userId !== undefined) {
+            dispatch(selectChat(params.userId));
+        }
         if(chats.chats.length === 0) {
             fetchChats();
         }
         if(chats.chats.length !== 0) {
-            chats.chats.forEach((chat)=>{
+            chats.chats.forEach((chat:Chat)=>{
                 if( chat.user._id === params.userId) {
                     setName(chat.user.name)
                 }
@@ -37,9 +40,11 @@ const ChatWindow = () => {
         }
         return () => {
             dispatch(selectChat(null));
-            readMessages(params.userId).then(()=>{
-                fetchChats();
-            })
+            if(params.userId != undefined) {
+                readMessages(params.userId).then(()=>{
+                    fetchChats();
+                })
+            }
         };
     }, []);
     return (

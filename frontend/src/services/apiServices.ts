@@ -26,7 +26,7 @@ export const getAllMessages = async () => {
     }
 }
 
-export const readMessages = async (userId) => {
+export const readMessages = async (userId:String) => {
     try {
         const resp = await axios.post(`${import.meta.env.VITE_API_URL}/api/messages/read-messages/${userId}`,{}, {
             withCredentials: true,

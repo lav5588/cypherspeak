@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import  { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { RootState } from "@/redux-toolkit/store";
 import { useParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
+import { Chat, Message } from "@/redux-toolkit/slices/chatSlice";
 
 const MessageList = () => {
     const params = useParams();
     const bottomRef = useRef<HTMLDivElement | null>(null);
     const chats = useSelector((state: RootState) => {
-        const ch = state.chat.chats.filter((chat) => chat.user._id === params.userId);
+        const ch = state.chat.chats.filter((chat:Chat) => chat.user._id === params.userId);
         return ch[0]?.messages || [];
     });
 
@@ -20,7 +21,7 @@ const MessageList = () => {
 
     return (
         <div className="space-y-3 p-4 max-h-[75vh] min-h-[75vh]">
-            {chats.map((msg) => (
+            {chats.map((msg:Message) => (
                 <Card
                     key={msg._id}
                     className={`p-3 rounded-lg max-w-xs ${

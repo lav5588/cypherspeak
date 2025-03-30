@@ -12,12 +12,13 @@ import UserChats from "./features/chat/UserChats"
 import { Toaster } from "./components/ui/sonner"
 import ChatWindow from "./features/chat/ChatWindow"
 import { addMessageToChat } from "./redux-toolkit/slices/chatSlice"
+import { RootState } from "./redux-toolkit/store"
 
 
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state:RootState) => state.auth.user);
   useEffect(() => {
     if (!user && socket.connected) {
       socket.disconnect();
@@ -31,10 +32,10 @@ const App = () => {
     });
     socket.on("receive-message", (data) => {
       console.log("📩 Message received:", data);
-      if (user._id === data.sender) {
+      if (user && user._id === data.sender) {
         dispatch(addMessageToChat({ userId: data.receiver, message: data }));
       }
-      else if (user._id === data.receiver) {
+      else if (user && user._id === data.receiver) {
         dispatch(addMessageToChat({ userId: data.sender, message: data }));
       }
     });

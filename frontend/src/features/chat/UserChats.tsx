@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getAllMessages, getAllUsers } from "@/services/apiServices";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import  { useEffect } from "react";
+import { getAllMessages, } from "@/services/apiServices";
+import { Card, CardContent} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { selectChat, setChats } from "@/redux-toolkit/slices/chatSlice";
+import { Chat, setChats } from "@/redux-toolkit/slices/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
@@ -17,7 +17,7 @@ type User = {
 
 const UserChats = () => {
     // const [messages, setMessages] = useState<User[]>([]);
-    const messages = useSelector((state: any) => state.chat.chats);
+    const messages:Chat[] = useSelector((state: any) => state.chat.chats);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

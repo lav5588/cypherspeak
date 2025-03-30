@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -14,12 +14,6 @@ import { User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux-toolkit/slices/authSlice";
 
-interface IUser {
-    name: string;
-    email: string;
-    avatar: string;
-    isOnline: boolean;
-}
 
 const Navbar: React.FC = () => {
     const dispatch = useDispatch();

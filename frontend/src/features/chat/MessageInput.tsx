@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import socket from "@/socket/socket";
 import { useParams } from "react-router-dom";
+import { RootState } from "@/redux-toolkit/store";
 
 const MessageInput = () => {
     const [message, setMessage] = useState("");
     const params = useParams();
-    const dispatch = useDispatch();
-    const senderId = useSelector((state) => state.auth?.user?._id) || null; // Adjust the selector based on your state structure
+    const senderId = useSelector((state:RootState) => state.auth?.user?._id) || null; // Adjust the selector based on your state structure
 
-    const handleSend = (e) => {
+    const handleSend = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!message.trim()) return;
         const msgData = {

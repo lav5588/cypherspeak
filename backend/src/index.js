@@ -8,9 +8,9 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 
 import http from 'http';
-import app from './app.js';
 import connectDB from './db/dbConnect.js';
 import { initSocket } from './socket/socket.js';
+import app from './app.js';
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Message {
-    id: string;
+export interface Message {
+    _id: string;
     content: string;
     sender: string;
-    timestamp: string;
+    createdAt: Date;
 }
 
-interface Chat {
+export interface Chat {
     user: {
         _id: string;
         name: string;
         email: string;
         avatar: string;
+        isOnline: boolean;
     };
     messages: Message[];
     unreadCount: number;
@@ -35,7 +36,7 @@ const chatSlice = createSlice({
         setChats: (state, action: PayloadAction<Chat[]>) => {
             state.chats = action.payload;
         },
-        selectChat: (state, action: PayloadAction<string>) => {
+        selectChat: (state, action: PayloadAction<string | null>) => {
             state.selectedChatUserId = action.payload;
         },
         addMessageToChat: (
@@ -70,7 +71,7 @@ const chatSlice = createSlice({
             const chat = state.chats.find(c => c.user._id === action.payload.userId);
             if (chat) {
                 chat.messages = chat.messages.filter(
-                    msg => msg.id !== action.payload.messageId
+                    msg => msg._id !== action.payload.messageId
                 );
             }
         },
